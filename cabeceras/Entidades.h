@@ -7,4 +7,5 @@ struct Ciudad {
     std::string nombre; //nombre de la ciudad
     int coordX; //coordenadas del grafo
     int coordY;
+    bool activa; //para la baja y alta de nodosCiudades
 };

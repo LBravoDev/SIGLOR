@@ -17,6 +17,17 @@ public: // seleccion publica
     // esta funcion copia la matrizBase, la pega en matrizAdyacencia y luego pone el valor en INFINITO en el lugar indicado para simular el corte de ruta.
     void cortarRutaUnica(int idOrigen, int idDestino);
     
+    // NUEVA FUNCIÓN: Restaura la matriz a su estado original (sin cortes)
+    void restaurarRutas();
+    
     // Esta funcion recorre la matriz y la muestra por consula tabularmente (sirve para demostrar en funcionamiento para la entrega parcial).
     void imprimirMatriz();
+
+    // GESTION DE NODOS (para cumplir con entrega final)
+    void altaCiudad(std::string nombre, int x, int y);
+    void bajaCiudad(int id);
+    void modificarCiudad(int id, std::string nuevoNombre, int nuevoX, int nuevoY);
+
+    // El "getter" que usará la interfaz gráfica
+    std::vector<Ciudad> getCiudadesActivas();
 };
