@@ -30,11 +30,14 @@ GrafoLogistico::GrafoLogistico()
 
     // Definimos las conexiones reales (las aristas del grafo)
     // MDP <-> La Plata, Tandil, etc.
-    matrizBase[0][1] = 365; matrizBase[1][0] = 365; 
-    matrizBase[1][4] = 170; matrizBase[4][1] = 170; 
-    matrizBase[4][3] = 130; matrizBase[3][4] = 130; 
-    matrizBase[3][2] = 300; matrizBase[2][3] = 300; 
-    matrizBase[1][2] = 450; matrizBase[2][1] = 450; 
+    matrizBase[0][1] = 370; matrizBase[1][0] = 370; 
+    matrizBase[1][4] = 171; matrizBase[4][1] = 171; 
+    matrizBase[4][3] = 135; matrizBase[3][4] = 135; 
+    matrizBase[3][2] = 298; matrizBase[2][3] = 298; 
+    matrizBase[1][2] = 465; matrizBase[2][1] = 465;
+    matrizBase[0][3] = 345; matrizBase[3][0] = 345;
+    matrizBase[0][4] = 347; matrizBase[4][0] = 347;
+    matrizBase[2][4] = 370; matrizBase[4][2] = 370;
 
     // Guardamos la base y laburamos sobre la de adyacencia
     matrizAdyacencia = matrizBase;
