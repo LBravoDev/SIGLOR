@@ -1,4 +1,4 @@
-#include "raylib.h"
+#include "../Raylib/raylib.h"
 #include "../cabeceras/Interfaz.h" 
 #include "../cabeceras/Grafo.h"
 

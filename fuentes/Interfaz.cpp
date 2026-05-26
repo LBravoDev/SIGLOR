@@ -1,5 +1,5 @@
-#include "Interfaz.h" 
-#include "raylib.h"
+#include "../cabeceras/Interfaz.h" 
+#include "../Raylib/raylib.h"
 
 #define RAYGUI_IMPLEMENTATION
 #include "../Raylib/raygui.h" 
