@@ -53,6 +53,27 @@ Coordenadas:
 - Latitud: -36.89
 - Longitud: -60.32
 
+_Nodos extra (catálogo)_
+
+Con el propósito de cumplir con la consigna (el usuario debe ser capaz de dar de alta nodos nuevos), se agregó un catálogo de nodos extra de los cuales el usuario podrá seleccionar el que desee para dar de alta. Esto debido a que para añadir dinámicamente nodos y sus rutas al programa, se requeriría el uso de alguna API, lo cual excede el contenido de la materia y del proyecto.
+
+Dicho esto, los nodos agregados son los siguientes:
+
+**Pergamino**: Polo agroindustrial, gran movimiento de granos.
+
+- Latitud: -33.89
+- Longitud: -60.57
+
+**Pehuajó**: Nodo agroindustrial del centro-oeste, importante movimiento de granos y ganado.
+
+- Latitud: -35.85
+- Longitud: -61.90
+
+**Coronel Suárez**: Nodo agroindustrial del sudoeste bonaerense.
+
+- Latitud: -37.46
+- Longitud: -61.93
+
 ![Ver nodos](./assets/nodos.png)
 
 **_Conexiones_**
@@ -63,43 +84,67 @@ La Plata conexión a Mar del Plata mediante RN2, 370km.
 
 **La Plata - Tandil**
 
-La Plata conexión a Tandil mediante RP215 hasta km38 (Cnel. Brandsen), luego RP29 hasta km282 (Ayacucho) y la RP74 hasta km333, y un último corto tramo hasta Tandil para un total de 347km.
+La Plata conexión a Tandil mediante RP215, RP29 y RP74, 347km.
 
 **La Plata - Olavarría**
 
-La Plata conexión a Olavarria mediante RP215 hasta km100 (San Miguel de Monte), luego RN3 hasta km300 (Azul), donde se toma la RN226 hasta Olavarría, 345km.
-
-**La Plata - Bahía Blanca**
-
-La Plata conexión a Bahía Blanca mediante RP215 hasta km99 (San Miguel de Monte), donde se tomará la RN3 hasta km296 (Azul), seguida de la RP51 hasta Bahía Blanca, 627km.
+La Plata conexión a Olavarria mediante RP215, RN3 y RN226, 345km.
 
 **Tandil - Mar del Plata**
 
-Tandil conexión a Mar del Plata mediante RN226 directo hasta Mar del Plata, 171km.
+Tandil conexión a Mar del Plata mediante RN226, 171km.
 
 **Tandil - Olavarría**
 
-Tandil conexión a Olavarría mediante RN226 directo hasta Olavarría, 135km.
+Tandil conexión a Olavarría mediante RN226, 135km.
 
 **Tandil - Bahía Blanca**
 
-Tandil conexión a Bahía Blanca mediante RP74 hasta km85 y luego RN3 hasta Bahía Blanca, 370km.
+Tandil conexión a Bahía Blanca mediante RP74 y RN3, 370km.
 
 **Mar del Plata - Bahía Blanca**
 
-Mar del Plata conexión a Bahía Blanca mediante RP88 hasta km124 (Necochea), luego RN228 hasta km271 (Tres Arroyos) y luego RN3 hasta Bahía Blanca,
+Mar del Plata conexión a Bahía Blanca mediante RP88, RN228 y RN3, 465km.
 
 **Olavarría - Bahía Blanca**
 
-Olavarría conexión a Bahía Blanca mediante RP51 directo hasta Bahía Blanca, 298km.
+Olavarría conexión a Bahía Blanca mediante RP51, 298km.
 
 **Olavarría - Mar del Plata**
 
-Olavarría conexión a Mar del Plata mediante RN226 directo hasta Mar del Plata, 305km.
+Olavarría conexión a Mar del Plata mediante RN226, 305km.
+
+**Pergamino - La Plata**
+
+Pergamino conexión La Plata mediante RN8, 287km.
+
+**Pergamino - Pehuajó**
+
+Pergamino conexión La Plata mediante RN188 y RP50, 298km.
+
+**Pergamino - Olavarría**
+
+Pergamino conexión Olavarría mediante RP65 y RN226, 400km.
+
+**Pehuajó - Cnel. Suárez**
+
+Pehuajó conexión Cnel. Suárez mediante RP86, 248km.
+
+**Pehuajó - Olavarría**
+
+Pehuajó conexión Olavarría mediante RN226, 196km.
+
+**Cnel. Suárez - Olavarría**
+
+Cnel. Suárez conexión Olavarría mediante RP51, 188km.
+
+**Cnel. Suárez - Bahía Blanca**
+
+Cnel. Suárez conexión Bahía Blanca mediante RN33, 182km.
 
 ![Ver rutas](./assets/rutas.png)
 
-Si bien se especifican las rutas que toma cada camino y las localidades intermedias, esto es más que nada para entender y visualizar mejor los caminos existentes. A la hora de realizar los cálculos para decidir el camino más corto, se tomará todo el conjunto de rutas que constituye el camino como una sola línea, y no se tendrán en cuenta las localidades intermedias ni se les tratará como nodos individuales.
+Si bien se especifican las rutas que toma cada camino, esto es más que nada para entender y visualizar mejor los caminos existentes. A la hora de realizar los cálculos para decidir el camino más corto, se tomará todo el conjunto de rutas que constituye el camino como una sola línea.
 
 ![Ver grafo](./assets/grafo.png)
 
@@ -112,15 +157,21 @@ A continuación se resumirá la información necesaria de este documento en tabl
 | _La Plata_      | \-34.92     | \-57.95      |
 | _Mar del Plata_ | \-37.99     | \-57.55      |
 | _Bahía Blanca_  | \-36.71     | \-62.27      |
-| _Tandil_        | \-36.89     | \-60.32      |
 | _Olavarría_     | \-37.33     | \-59.15      |
+| _Tandil_        | \-36.89     | \-60.32      |
+| _Pergamino_     | \-33.89     | \-60.57      |
+| _Pehuajó_       | \-35.85     | \-61.90      |
+| _Cnel. Suárez_  | \-37.46     | \-61.93      |
 
 **_Matriz de adyacencia_**
 
-|       | **1** | **2** | **3** | **4** | **5** |
-| ----- | ----- | ----- | ----- | ----- | ----- |
-| **1** | 0     | 370   | ∞     | 345   | 347   |
-| **2** | 370   | 0     | 465   | ∞     | 171   |
-| **3** | ∞     | 465   | 0     | 298   | 370   |
-| **4** | 345   | ∞     | 298   | 0     | 135   |
-| **5** | 347   | 171   | 370   | 135   | 0     |
+|       | **1** | **2** | **3** | **4** | **5** | **6** | **7** | **8** |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| **1** | 0     | 370   | ∞     | 345   | 347   | 287   | ∞     | ∞     |
+| **2** | 370   | 0     | 465   | ∞     | 171   | ∞     | ∞     | ∞     |
+| **3** | ∞     | 465   | 0     | 298   | 370   | ∞     | ∞     | 183   |
+| **4** | 345   | ∞     | 298   | 0     | 135   | 400   | 196   | 188   |
+| **5** | 347   | 171   | 370   | 135   | 0     | ∞     | ∞     | ∞     |
+| **6** | 287   | ∞     | ∞     | 400   | ∞     | 0     | 298   | ∞     |
+| **7** | ∞     | ∞     | ∞     | 196   | ∞     | 298   | 0     | 248   |
+| **8** | ∞     | ∞     | 183   | 188   | ∞     | ∞     | 248   | 0     |
