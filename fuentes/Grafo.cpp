@@ -11,11 +11,15 @@ GrafoLogistico::GrafoLogistico()
 {
     // Metemos las 5 ciudades base que pide el TP (ojo: respetar distancias de 200-300km)
     // Estructura: {id, nombre, x, y, activa}
-    ciudades.push_back({0, "La Plata", 500, 100, true});
-    ciudades.push_back({1, "Mar del Plata", 600, 500, true});
-    ciudades.push_back({2, "Bahia Blanca", 100, 800, true});
-    ciudades.push_back({3, "Olavarria", 300, 400, true});
-    ciudades.push_back({4, "Tandil", 450, 450, true});
+    ciudades.push_back({0 , "La Plata" , 500 , 100 , true});
+    ciudades.push_back({1 , "Mar del Plata" , 600 , 500 , true});
+    ciudades.push_back({2 , "Bahia Blanca" , 100 , 800 , true});
+    ciudades.push_back({3 , "Olavarria" , 300 , 400 , true});
+    ciudades.push_back({4 , "Tandil" , 450 , 450 , true});
+    // Ciudades dinámicas desactivadas por defecto (esperando que el usuario las dé de alta)
+    ciudades.push_back({5 , "Pergamino" , 1 , 1 , false});
+    ciudades.push_back({6 , "Pehuajo" , 1 , 1 , false});
+    ciudades.push_back({7 , "Coronel Suarez", 1 , 1 , false});
 
     int n = ciudades.size();
 
@@ -29,15 +33,21 @@ GrafoLogistico::GrafoLogistico()
     }
 
     // Definimos las conexiones reales (las aristas del grafo)
-    // MDP <-> La Plata, Tandil, etc.
-    matrizBase[0][1] = 370; matrizBase[1][0] = 370; 
-    matrizBase[1][4] = 171; matrizBase[4][1] = 171; 
-    matrizBase[4][3] = 135; matrizBase[3][4] = 135; 
-    matrizBase[3][2] = 298; matrizBase[2][3] = 298; 
-    matrizBase[1][2] = 465; matrizBase[2][1] = 465;
-    matrizBase[0][3] = 345; matrizBase[3][0] = 345;
-    matrizBase[0][4] = 347; matrizBase[4][0] = 347;
-    matrizBase[2][4] = 370; matrizBase[4][2] = 370;
+    matrizBase[0][1] = 370; matrizBase[1][0] = 370; // La Plata <-> Mar del Plata
+    matrizBase[1][4] = 171; matrizBase[4][1] = 171; // Mar del Plata <-> Tandil
+    matrizBase[4][3] = 135; matrizBase[3][4] = 135; // Tandil <-> Olavarria
+    matrizBase[3][2] = 298; matrizBase[2][3] = 298; // Olavarria <-> Bahia Blanca
+    matrizBase[1][2] = 465; matrizBase[2][1] = 465; // Mar del Plata <-> Bahia Blanca
+    matrizBase[0][3] = 345; matrizBase[3][0] = 345; // La Plata <-> Olavarria
+    matrizBase[0][4] = 347; matrizBase[4][0] = 347; // La Plata <-> Tandil
+    matrizBase[2][4] = 370; matrizBase[4][2] = 370; // Bahia Blanca <-> Tandil
+    matrizBase[5][0] = 287; matrizBase[0][5] = 287; // Pergamino <-> La Plata
+    matrizBase[5][3] = 400; matrizBase[3][5] = 400; // Pergamino <-> Olavarría
+    matrizBase[5][6] = 298; matrizBase[6][5] = 298; // Pergamino <-> Pehuajó
+    matrizBase[6][3] = 196; matrizBase[3][6] = 196; // Pehuajó <-> Olavarría
+    matrizBase[6][7] = 248; matrizBase[7][6] = 248; // Pehuajó <-> Coronel Suárez
+    matrizBase[7][3] = 188; matrizBase[3][7] = 188; // Coronel Suárez <-> Olavarría
+    matrizBase[7][2] = 183; matrizBase[2][7] = 183; // Coronel Suárez <-> Bahía Blanca
 
     // Guardamos la base y laburamos sobre la de adyacencia
     matrizAdyacencia = matrizBase;
@@ -46,26 +56,13 @@ GrafoLogistico::GrafoLogistico()
 // --- ABM de ciudades (La gestión de nodos que pidió el profe) ---
 
 // ALTA: Metemos una ciudad nueva y le hacemos lugar en la matriz para que no rompa nada
-void GrafoLogistico::altaCiudad(string nombre, int x, int y) 
+void GrafoLogistico::altaCiudad(int id) 
 {
-    int nuevoId = ciudades.size(); 
-    ciudades.push_back({nuevoId, nombre, x, y, true}); 
-
-    // Agrandamos las filas actuales agregando una columna nueva al final
-    int n = ciudades.size();
-    for(int i = 0; i < n - 1; i++) 
+    if (id >= 0 && id < (int)ciudades.size()) 
     {
-        matrizBase[i].push_back(INFINITO);
-        matrizAdyacencia[i].push_back(INFINITO);
+        ciudades[id].activa = true;
+        cout << ">>> SISTEMA: " << ciudades[id].nombre << " ahora está en el mapa." << endl;
     }
-    
-    // Creamos la fila nueva para el nodo que acabamos de agregar
-    vector<int> nuevaFila(n, INFINITO);
-    nuevaFila[n-1] = 0; // Distancia a sí mismo
-    matrizBase.push_back(nuevaFila);
-    matrizAdyacencia.push_back(nuevaFila);
-    
-    cout << ">>> SISTEMA: Ciudad '" << nombre << "' agregada con ID: " << nuevoId << endl;
 }
 
 // BAJA LOGICA: No borramos de la matriz porque se nos rompen todos los IDs
@@ -151,7 +148,7 @@ void GrafoLogistico::imprimirMatriz()
 vector<Ciudad> GrafoLogistico::getCiudadesActivas()
 {
     vector<Ciudad> activas;
-    for(const auto& c : ciudades) 
+    for(const auto &c : ciudades) 
     {
         if(c.activa) activas.push_back(c);
     }
