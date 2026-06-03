@@ -25,7 +25,7 @@ Desarrollado con esfuerzo por el grupo de proyecto:
 * 🧑‍💻 **Bravo, Lautaro** — [GitHub](https://github.com/LBravoDev)
 * 🧑‍💻 **Sanchez, Lisandro** — [GitHub](https://github.com/LichaSDev)
 * 🧑‍💻 **Gonzalez, Joaquin** — [GitHub](https://github.com/JoaquinGDev)
-* 🧑‍💻 **Moran, Alex** — [GitHub](https://github.com/GSAniki)
+* 🧑‍💻 **Moran, Alex** — [GitHub](https://github.com/GSAniki) <-
 
 ---
 
