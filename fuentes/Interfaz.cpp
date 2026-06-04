@@ -1,8 +1,8 @@
 #include "../cabeceras/Interfaz.h" 
-#include "../Raylib/raylib.h"
+#include "../libs/raylib.h"
 
 #define RAYGUI_IMPLEMENTATION
-#include "../Raylib/raygui.h" 
+#include "../libs/raygui.h" 
 
 #include <iostream>
 

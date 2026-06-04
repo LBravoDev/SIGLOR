@@ -14,8 +14,8 @@ echo "================================================="
 g++ ../fuentes/main.cpp ../fuentes/Interfaz.cpp ../fuentes/Grafo.cpp \
     -o ../ejecutables/programa_linux \
     -I ../Raylib -I ../cabeceras \
-    -L . \
-    -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 \
+    -L ../libs \
+    -lraylibLinux -lGL -lm -lpthread -ldl -lrt -lX11 \
     -Wno-enum-compare
 
 if [ $? -eq 0 ]; then

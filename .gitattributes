@@ -1,0 +1,2 @@
+# Ocultar las librerías para que no afecte las estadísticas del repositorio
+libs/** linguist-vendored

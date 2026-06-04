@@ -1,12 +1,8 @@
 PROYECTO EDA2 - CARPETA: COMPILACIÓN
 ------------------------------------
 ¿Que contiene esta carpeta?
-    -> Es una carpeta de trabajo temporal para el compilador. Sirve para almacenar los archivos objeto (.o)
-    y acelerar el proceso de construcción del programa.
+    -> Contiene scripts de compilación para compilar el programa rápidamente y sin necesidad de ingresar comandos manualmente.
 
 CONTENIDO:
-- Archivos temporales generados automáticamente por VSC. 
-- NOTA: Esta carpeta está excluida de Git con .gitignore para evitar subir archivos pesados e innecesarios al repo.
-
-    #Ni se gasten en mirar qué hay adentro. De hecho, puse esta carpeta en el .gitignore para que no se suba nada
-    de esto al repo, así mantenemos el GitHub limpito y solo con lo importante.
+- Script de compilación para Windows ('Compilar.bat')
+- Script de compilación para Linux ('compilar.sh')

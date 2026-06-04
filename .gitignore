@@ -21,7 +21,6 @@
 
 # 1. Ignorar carpetas de salida (deberian de generarse solas al compilar)
 # No queremos subir archivos pesados que ralentizan el repo.
-compilacion/
 ejecutables/
 
 # 2. Configuraciones de Editor (IDEs)
