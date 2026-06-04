@@ -1,0 +1,164 @@
+#include <iostream>
+#include <cstdlib>
+#include "../cabeceras/Grafo.h"
+
+using namespace std; 
+
+// Funcioncita para frenar el programa y que no se nos cierre la consola de una
+void esperarTecla()
+{
+    cout << "\nPresione ENTER para continuar...";
+    cin.ignore(); // Limpia basura del buffer
+    cin.get();    // Espera el enter
+}
+
+int main() {
+    GrafoLogistico sistema; // Instanciamos el motor del grafo
+    int opcionPrincipal; 
+    
+    // -------- BUCLE DEL MENU PRINCIPAL --------
+    do
+    {
+        // Esto es para que limpie la consola segun si estas en Windows o Linux
+        #ifdef _WIN32
+            system("cls");
+        #else
+            system("clear");
+        #endif
+
+        cout << "\n====== SISTEMA DE GESTION LOGISTICA ======" << endl;
+        cout << "1. Ver Red Logistica (Matriz)" << endl;
+        cout << "2. Aniadir Corte de Ruta" << endl;
+        cout << "3. Calcular Ruta Optima" << endl;
+        cout << "4. Gestionar Nodos" << endl;
+        cout << "0. Salir" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opcionPrincipal;
+
+        switch(opcionPrincipal)
+        {
+            case 1:
+                // Muestra la matriz de adyacencia actual (la que tiene los km)
+                sistema.imprimirMatriz();
+                esperarTecla();
+                break; 
+            case 2:
+            {
+                int opcionRuta;
+                cout << "\n--- MODULO DE CONTINGENCIAS ---" << endl;
+                cout << "Cual ruta se corto? (Esto pone INF en la matriz):" << endl;
+                cout << "1. La Plata <-> Mar del Plata" << endl;
+                cout << "2. Mar del Plata <-> Tandil" << endl;
+                cout << "3. Tandil <-> Olavarria" << endl;
+                cout << "4. Olavarria <-> Bahia Blanca" << endl;
+                cout << "5. Mar del Plata <-> Bahia Blanca" << endl;
+                cout << "6. La Plata <-> Tandil" << endl;
+                cout << "7. La Plata <-> Olavarria" << endl;
+                cout << "8. Tandil <-> Bahia Blanca" << endl;
+                cout << "9. Pergamino <-> La Plata" << endl;
+                cout << "10. Pergamino <-> Olavarria" << endl;
+                cout << "11. Pergamino <-> Pehuajo" << endl;
+                cout << "12. Pehuajo <-> Olavarria" << endl;
+                cout << "13. Pehuajo <-> Coronel Suarez" << endl;
+                cout << "14. Coronel Suarez <-> Olavarria" << endl;
+                cout << "15. Coronel Suarez <-> Bahia Blanca" << endl;
+                cout << "16. RESET (Volver a la red normal)" << endl;
+                cout << "0. Cancelar" << endl;
+                cout << "Opcion: ";
+                cin >> opcionRuta;
+
+                // Aca mandamos los indices a mano segun el orden de la matriz
+                switch(opcionRuta)
+                {
+                    case 1: sistema.cortarRutaUnica(0 , 1); break;
+                    case 2: sistema.cortarRutaUnica(1 , 4); break;
+                    case 3: sistema.cortarRutaUnica(4 , 3); break;
+                    case 4: sistema.cortarRutaUnica(3 , 2); break;
+                    case 5: sistema.cortarRutaUnica(1 , 2); break;
+                    case 6: sistema.cortarRutaUnica(0 , 4);break;
+                    case 7: sistema.cortarRutaUnica(0 , 3);break;
+                    case 8: sistema.cortarRutaUnica(4 , 2);break;
+                    case 9: sistema.cortarRutaUnica(5 , 0);break;
+                    case 10: sistema.cortarRutaUnica(5 , 3);break;
+                    case 11: sistema.cortarRutaUnica(5 , 6);break;
+                    case 12: sistema.cortarRutaUnica(6 , 3);break;
+                    case 13: sistema.cortarRutaUnica(6 , 7);break;
+                    case 14: sistema.cortarRutaUnica(7 , 3);break;
+                    case 15: sistema.cortarRutaUnica(7 , 2);break;
+                    case 16: sistema.restaurarRutas(); break; 
+                    case 0: cout << "[SISTEMA] No hubo modificaciones." << endl; break;
+                    default: cout << "[ERROR] Opcion invalida." << endl;
+                }
+                
+                // Si cambió algo, le mostramos la matriz de nuevo para confirmar el cambio
+                if(opcionRuta >= 1 && opcionRuta <= 16)
+                { 
+                    sistema.imprimirMatriz(); 
+                }
+                esperarTecla();
+                break;
+            }
+            case 3:
+            {
+                int origen, destino;
+                cout << "\n--- TESTEO DE RECORRIDOS ---" << endl;
+                cout << "1. La Plata\n2. Mar del Plata\n3. Bahia Blanca\n4. Olavarria\n5. Tandil\n6. Pergamino\n7. Pehuajo\n8. Coronel Suarez" << endl;
+                
+                cout << "Desde (1-8): ";
+                cin >> origen;
+                cout << "Hasta (1-8): ";
+                cin >> destino;
+
+                // Restamos 1 porque el usuario ve 1-5 pero el array es 0-4
+                origen--; 
+                destino--;
+
+                if(origen == destino)
+                {
+                    cout << "[SISTEMA] El origen y el destino no pueden ser el mismo." << endl;
+                }else if(origen >= 0 && origen <= 7 && destino >= 0 && destino <= 7)
+                {
+                    int distanciaTotal;
+                    vector<int> rutaCalculada;
+                    rutaCalculada = sistema.calcularDijkstra(origen,destino,distanciaTotal);
+                    cout << "\nDistancia calculada: " << distanciaTotal << "km." << endl;
+                    sistema.imprimirCamino(rutaCalculada);
+                }else
+                {
+                    cout << "\n>>> [ERROR] Opcion invalida." << endl;
+                }
+                esperarTecla();
+                break;
+            }
+            case 4:
+                int opcionGestion;
+                cout << ">1: Dar de alta" << endl;
+                cout << ">2: Dar de baja" << endl;
+                cout << ">3: Modificar nodo" << endl;
+                cout << ">0: Salir" << endl;
+                cin >> opcionGestion;
+
+                int idCiudad;
+                if(opcionGestion == 1 || opcionGestion == 2 || opcionGestion == 3)
+                {
+                    cout << "Ingrese el id del nodo (1-8): " << endl;
+                    cin >> idCiudad;
+                    idCiudad -= 1;
+                }
+                switch(opcionGestion)
+                {
+                    case 1:sistema.altaCiudad(idCiudad);break;
+                    case 2:sistema.bajaCiudad(idCiudad);break;
+                    case 3:cout << "Funcion no disponible." << endl;break;
+                    case 0:cout << "\n>>> [SISTEMA] Saliendo..." << endl;break;
+                    default:cout << "\n>>> [ERROR] Opcion invalida." << endl;break;
+                }
+                esperarTecla();
+                break;
+            case 0:cout << "\n>>> [SISTEMA] Finalizando..." << endl;break;
+            default:cout << "\n>>> [ERROR] Opcion invalida." << endl;break;
+        }
+    } while(opcionPrincipal != 0);
+
+    return 0;
+}
