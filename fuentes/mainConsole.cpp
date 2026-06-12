@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include "../cabeceras/Grafo.h"
+#include "../cabeceras/Persistencia.h"
 
 using namespace std; 
 
@@ -31,6 +32,7 @@ int main() {
         cout << "2. Aniadir Corte de Ruta" << endl;
         cout << "3. Calcular Ruta Optima" << endl;
         cout << "4. Gestionar Nodos" << endl;
+        cout << "5. Ver Historial de Rutas" << endl;
         cout << "0. Salir" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcionPrincipal;
@@ -123,6 +125,9 @@ int main() {
                     rutaCalculada = sistema.calcularDijkstra(origen,destino,distanciaTotal);
                     cout << "\nDistancia calculada: " << distanciaTotal << "km." << endl;
                     sistema.imprimirCamino(rutaCalculada);
+                    
+                    // CORREGIDO: Se usan las variables locales de este archivo
+                    Persistencia::guardarRutaHistorica(origen, destino, distanciaTotal, rutaCalculada);
                 }else
                 {
                     cout << "\n>>> [ERROR] Opcion invalida." << endl;
@@ -131,6 +136,7 @@ int main() {
                 break;
             }
             case 4:
+            {
                 int opcionGestion;
                 cout << ">1: Dar de alta" << endl;
                 cout << ">2: Dar de baja" << endl;
@@ -155,8 +161,19 @@ int main() {
                 }
                 esperarTecla();
                 break;
-            case 0:cout << "\n>>> [SISTEMA] Finalizando..." << endl;break;
-            default:cout << "\n>>> [ERROR] Opcion invalida." << endl;break;
+            }
+            case 5: // <--- NUEVO CASE PARA VER EL HISTORIAL
+            {
+                Persistencia::mostrarHistorial();
+                esperarTecla();
+                break;
+            }
+            case 0:
+                cout << "\n>>> [SISTEMA] Finalizando..." << endl;
+                break;
+            default:
+                cout << "\n>>> [ERROR] Opcion invalida." << endl;
+                break;
         }
     } while(opcionPrincipal != 0);
 

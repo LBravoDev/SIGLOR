@@ -1,5 +1,6 @@
 #include "../cabeceras/Interfaz.h" 
 #include "../libs/raylib.h"
+#include "../cabeceras/Persistencia.h"
 
 #define RAYGUI_IMPLEMENTATION
 #include "../libs/raygui.h" 
@@ -78,6 +79,8 @@ void InterfazLogica(GrafoLogistico &sistema) {
                 std::cout << "\n>>> [INTERFAZ] Camino minimo calculado con exito." << std::endl;
                 sistema.imprimirCamino(caminoObtenido);
                 std::cout << ">>> Distancia Total Optima: " << distanciaTotal << " km" << std::endl;
+                //llamo a la funcion para guardar todo en el dat
+                Persistencia::guardarRutaHistorica(origenSeleccionado, destinoSeleccionado, distanciaTotal, caminoObtenido);
             }
             std::cout << "=======================================================\n" << std::endl;
 
