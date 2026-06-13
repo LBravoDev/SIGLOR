@@ -27,6 +27,9 @@ const char* nombreCiudad(int id)
         case 2: return "Bahia Blanca";
         case 3: return "Olavarria";
         case 4: return "Tandil";
+        case 5: return "Pergamino";
+        case 6: return "Pehuajo";
+        case 7: return "Coronel Suarez";
         default: return "Ninguno";
     }
 }
@@ -58,10 +61,25 @@ bool esRutaFisica(int ciudadA, int ciudadB)
 
 void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa) 
 {
+    // --- ESTILO GLOBAL DE BOTONES ---
+    GuiSetStyle(BUTTON, 16, 8);
+    GuiSetStyle(BUTTON, BORDER_WIDTH, 1);
+    
+    // Color base azul petróleo
+    GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, ColorToInt(CLITERAL(Color){ 52, 152, 219, 255 }));
+    GuiSetStyle(BUTTON, BASE_COLOR_FOCUSED, ColorToInt(CLITERAL(Color){ 41, 128, 185, 255 }));
+    GuiSetStyle(BUTTON, BASE_COLOR_PRESSED, ColorToInt(CLITERAL(Color){ 31, 97, 141, 255 }));
+    
+    // --- TEXTO EN NEGRO PARA TODOS LOS BOTONES ---
+    GuiSetStyle(BUTTON, TEXT_COLOR_NORMAL, ColorToInt(BLACK));
+    GuiSetStyle(BUTTON, TEXT_COLOR_FOCUSED, ColorToInt(BLACK));
+    GuiSetStyle(BUTTON, TEXT_COLOR_PRESSED, ColorToInt(BLACK));
+
+    // Ajuste de medidas: Altura incrementada en 10px para mayor ancho
     const float Base = 40;
-    const float Altura = 220; 
+    const float Altura = 230; // Originalmente 220, ahora 230
     const float Ancho = 40;   
-    const float espacio = 50;  
+    const float espacio = 50; 
     
     // Seteamos el tamanio de la fuente para RayGui
     GuiSetStyle(DEFAULT, TEXT_SIZE, 18); 
@@ -69,6 +87,9 @@ void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa)
     // Variables estáticas para mantener el estado entre frames
     static int scrollIndex = 0; 
     static std::vector<int> ultimoCaminoDijkstra; // Guarda el camino de la última búsqueda
+
+    // Traemos TODAS las ciudades al principio para usarlas en las validaciones de toda la interfaz
+    std::vector<Ciudad> todasLasCiudades = sistema.getTodasLasCiudades();
 
     // Posicionamiento estratégico del mapa en la ventana 1280x720
     Vector2 posicionMapa = { 510.0f, 75.0f };
@@ -87,47 +108,43 @@ void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa)
     // =================================================================
     // COORDENADAS GEOGRÁFICAS REALES (Medidas sobre la imagen de 960x1277)
     // =================================================================
-    // Si notás que alguna ciudad necesita un ajuste fino, modificá directamente
-    // estos valores de acá abajo. El bucle posterior se encarga de escalarlos.
-Vector2 localesOriginales[5] = {
-        { 730.0f, 320.0f }, // ID 0: La Plata (Movido hacia la costa este)
-        { 760.0f, 790.0f }, // ID 1: Mar del Plata (Movido hacia la punta de la costa)
-        { 260.0f, 920.0f }, // ID 2: Bahia Blanca (Se mantiene)
-        { 450.0f, 575.0f }, // ID 3: Olavarria (Se mantiene)
-        { 580.0f, 640.0f }  // ID 4: Tandil (Movido hacia la derecha)
+    Vector2 localesOriginales[8] = {
+        { 730.0f, 320.0f }, // ID 0: La Plata 
+        { 760.0f, 790.0f }, // ID 1: Mar del Plata 
+        { 260.0f, 920.0f }, // ID 2: Bahia Blanca 
+        { 450.0f, 575.0f }, // ID 3: Olavarria 
+        { 580.0f, 640.0f }, // ID 4: Tandil 
+        // --- CIUDADES DINAMICAS ---
+        { 490.0f, 170.0f }, // ID 5: Pergamino 
+        { 150.0f, 400.0f }, // ID 6: Pehuajo 
+        { 230.0f, 750.0f }  // ID 7: Coronel Suarez
     };
 
     // Calculamos las coordenadas en pantalla aplicando la escala de forma dinámica
-    Vector2 coordenadasCiudades[5];
-    for (int i = 0; i < 5; i++)
+    Vector2 coordenadasCiudades[8];
+    for (int i = 0; i < 8; i++)
     {
+        // Esto asegura que cada nodo se mueva "pegado" al mapa
         coordenadasCiudades[i].x = posicionMapa.x + (localesOriginales[i].x * escalaMapa);
         coordenadasCiudades[i].y = posicionMapa.y + (localesOriginales[i].y * escalaMapa);
     }
 
-// =================================================================
+    // =================================================================
     // PASO 3: DIBUJAR RUTAS (ARISTAS) EN BASE A LA MATRIZ DEL GRAFO
     // =================================================================
     std::vector<std::vector<int>> matriz = sistema.obtenerMatrizAdyacencia();
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 8; i++)
     {
-        for (int j = i + 1; j < 5; j++) 
+        for (int j = i + 1; j < 8; j++) 
         {
-            // Solo dibujamos si es una ruta que geográficamente existe en nuestro sistema
-            if (esRutaFisica(i, j)) 
+            // Solo dibujamos la ruta si ambas ciudades están activas Y la ruta tiene peso válido (NO es INFINITO)
+            // Esto elimina las líneas rojas locas al añadir Pergamino/Pehuajó/Cnel. Suárez
+            if (todasLasCiudades[i].activa && todasLasCiudades[j].activa && matriz[i][j] > 0 && matriz[i][j] < 999999) 
             {
-                if (matriz[i][j] == 999999 || matriz[j][i] == 999999)
-                {
-                    // Dibujamos la ruta cortada en ROJO solo si era una ruta válida
-                    DrawLineEx(coordenadasCiudades[i], coordenadasCiudades[j], 3.5f, RED);
-                }
-                else if (matriz[i][j] > 0 && matriz[i][j] < 999999)
-                {
-                    // Dibujamos la ruta normal activa en gris oscuro
-                    Color colorRutaNormal = (mostrarVentanaHistorial ? LIGHTGRAY : DARKGRAY);
-                    DrawLineEx(coordenadasCiudades[i], coordenadasCiudades[j], 2.0f, colorRutaNormal);
-                }
+                // Dibujamos la ruta normal activa en gris oscuro
+                Color colorRutaNormal = (mostrarVentanaHistorial ? LIGHTGRAY : DARKGRAY);
+                DrawLineEx(coordenadasCiudades[i], coordenadasCiudades[j], 2.0f, colorRutaNormal);
             }
         }
     }
@@ -148,65 +165,109 @@ Vector2 localesOriginales[5] = {
     }
 
     // Pintamos los nodos (circulos) arriba de todas las líneas
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 8; i++)
     {
-        Color colorNodo = MAROON;
-        
-        if (i == origenSeleccionado) 
+        // Solo dibujamos el nodo si la ciudad está ACTIVA
+        if (todasLasCiudades[i].activa)
         {
-            colorNodo = GREEN;
-        }
-        else if (i == destinoSeleccionado) 
-        {
-            colorNodo = GOLD;
-        }
+            Color colorNodo = MAROON;
+            
+            if (i == origenSeleccionado) 
+            {
+                colorNodo = GREEN;
+            }
+            else if (i == destinoSeleccionado) 
+            {
+                colorNodo = GOLD;
+            }
 
-        if (mostrarVentanaHistorial) 
-        {
-            colorNodo = GRAY;
-        }
+            if (mostrarVentanaHistorial) 
+            {
+                colorNodo = GRAY;
+            }
 
-        DrawCircleV(coordenadasCiudades[i], 10.0f, colorNodo);
-        DrawText(nombreCiudad(i), coordenadasCiudades[i].x + 14, coordenadasCiudades[i].y - 7, 14, (mostrarVentanaHistorial ? DARKGRAY : BLACK));
+            DrawCircleV(coordenadasCiudades[i], 10.0f, colorNodo);
+            DrawText(nombreCiudad(i), coordenadasCiudades[i].x + 14, coordenadasCiudades[i].y - 7, 14, (mostrarVentanaHistorial ? DARKGRAY : BLACK));
+        }
     }
 
     // Bloqueamos la interfaz de atras si el historial esta abierto
     if (!mostrarVentanaHistorial) 
     {
-        // Bloque del Origen
+        // =================================================================
+        // PANEL IZQUIERDO DE BOTONES (Acomodado sistemáticamente)
+        // =================================================================
+
+        // 1. Bloque de Origen/Destino
         DrawText(TextFormat("Origen: %s (ID: %d)", nombreCiudad(origenSeleccionado), origenSeleccionado), Base, 50, 18, BLACK);
         Rectangle rectOrigen = { Base, 75, Altura, Ancho };
         if (GuiButton(rectOrigen, "#102# Cambiar Origen")) 
         {
-            origenSeleccionado = (origenSeleccionado + 1) % 5; 
+            do {
+                if (origenSeleccionado == -1) origenSeleccionado = 0;
+                else origenSeleccionado = (origenSeleccionado + 1) % 8; 
+            } while (!todasLasCiudades[origenSeleccionado].activa);
+
             ultimoCaminoDijkstra.clear(); 
             refrescarConsolaControl();
         }
 
-        // Bloque del Destino
         DrawText(TextFormat("Destino: %s (ID: %d)", nombreCiudad(destinoSeleccionado), destinoSeleccionado), Base, 150, 18, BLACK);
         Rectangle rectDestino = { Base, 175, Altura, Ancho };
         if (GuiButton(rectDestino, "#103# Cambiar Destino")) 
         {
-            destinoSeleccionado = (destinoSeleccionado + 1) % 5;
+            do {
+                if (destinoSeleccionado == -1) destinoSeleccionado = 0;
+                else destinoSeleccionado = (destinoSeleccionado + 1) % 8;
+            } while (!todasLasCiudades[destinoSeleccionado].activa);
+
             ultimoCaminoDijkstra.clear(); 
             refrescarConsolaControl();
         }
 
-        // Boton para simular la caida de un tramo
-        Rectangle rectCortar = { Base, 175 + espacio, Altura, Ancho };
+    // 2. Bloque de Operación (Justo después de Destino)
+        Rectangle rectCortar = { Base, 175 + espacio, Altura, Ancho }; // Cortar a Y=225
+        
+        // Estilo Rojo para "Cortar Ruta"
+        GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, ColorToInt(RED));
+        GuiSetStyle(BUTTON, BASE_COLOR_FOCUSED, ColorToInt(MAROON));
+        
         if (GuiButton(rectCortar, "#149# Cortar Ruta Elegida")) 
         {
-            // Verificamos que haya origen, destino, y que la ruta FÍSICAMENTE exista
-            if (origenSeleccionado != -1 && destinoSeleccionado != -1 && esRutaFisica(origenSeleccionado, destinoSeleccionado)) 
+            // 1. Validar que ambos estén seleccionados
+            if (origenSeleccionado != -1 && destinoSeleccionado != -1) 
             {
-                sistema.cortarRutaUnica(origenSeleccionado, destinoSeleccionado);
-                ultimoCaminoDijkstra.clear(); 
+                // 2. Obtener la matriz actual para verificar si hay conexión directa
+                std::vector<std::vector<int>> matriz = sistema.obtenerMatrizAdyacencia();
+                
+                // 3. Verificamos si existe una arista directa (peso > 0 y distinto de INFINITO)
+                if (matriz[origenSeleccionado][destinoSeleccionado] > 0 && matriz[origenSeleccionado][destinoSeleccionado] < 999999) 
+                {
+                    // SI ES ADYACENTE: Realizamos el corte
+                    sistema.cortarRutaUnica(origenSeleccionado, destinoSeleccionado);
+                    ultimoCaminoDijkstra.clear(); 
+                    std::cout << ">>> [AVISO] Ruta directa entre " << nombreCiudad(origenSeleccionado) 
+                              << " y " << nombreCiudad(destinoSeleccionado) << " ha sido CORTADA." << std::endl;
+                }
+                else 
+                {
+                    // SI NO ES ADYACENTE: Mostramos mensaje de error controlado
+                    std::cout << ">>> [ERROR] No existe ruta directa entre " << nombreCiudad(origenSeleccionado) 
+                              << " y " << nombreCiudad(destinoSeleccionado) << ". Solo se pueden cortar conexiones directas." << std::endl;
+                }
+            }
+            else 
+            {
+                std::cout << ">>> [ERROR] Debe seleccionar origen y destino." << std::endl;
             }
         }
 
-        // Boton para correr el algoritmo de Dijkstra
-        Rectangle rectDijkstra = { Base, 175 + (espacio * 2), Altura, Ancho };
+        // Estilo Verde para "Ejecutar Búsqueda"
+        Rectangle rectDijkstra = { Base, 175 + (espacio * 2), Altura, Ancho }; // Dijkstra a Y=275
+        
+        GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, ColorToInt(GREEN));
+        GuiSetStyle(BUTTON, BASE_COLOR_FOCUSED, ColorToInt(LIME));
+        
         if (GuiButton(rectDijkstra, "#131# EJECUTAR BUSQUEDA")) 
         {
             if (origenSeleccionado != -1 && destinoSeleccionado != -1) 
@@ -225,15 +286,19 @@ Vector2 localesOriginales[5] = {
             }
         }
 
-        // Imprime la matriz por la terminal de C++
-        Rectangle rectMatriz = { Base, 480, 200, 35 };
+        // Restauramos el color Azul original para los siguientes botones
+        GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, ColorToInt(CLITERAL(Color){ 52, 152, 219, 255 }));
+        GuiSetStyle(BUTTON, BASE_COLOR_FOCUSED, ColorToInt(CLITERAL(Color){ 41, 128, 185, 255 }));
+
+        // 3. Bloque de Administración (Separado, Y base 350)
+        int posYAdminBase = 350;
+        Rectangle rectMatriz = { Base, (float)posYAdminBase, Altura, 35 }; // Ajusté altura a Altura/4-5 y alineé ancho
         if (GuiButton(rectMatriz, "Ver Matriz Actual")) 
         {
             sistema.imprimirMatriz();
         }
 
-        // Boton para disparar la ventana modal
-        Rectangle rectHistorial = { Base, 530, 200, 35 }; 
+        Rectangle rectHistorial = { Base, (float)posYAdminBase + espacio, Altura, 35 }; 
         if (GuiButton(rectHistorial, "Ver Historial")) 
         {
             historialParaMostrar = Persistencia::obtenerHistorial();
@@ -252,6 +317,31 @@ Vector2 localesOriginales[5] = {
             }
         }
 
+        // 4. Panel de Alta de Ciudades (Base mucho más baja, Y base 510, texto base 480)
+        int AltaCitiesTextY = 480;
+        DrawText("CIUDADES DISPONIBLES:", Base, (float)AltaCitiesTextY, 15, DARKGRAY);
+
+        int posYActivacion = AltaCitiesTextY + 30; // 510
+        
+        for (int i = 0; i < (int)todasLasCiudades.size(); i++) 
+        {
+            if (!todasLasCiudades[i].activa) 
+            {
+                Rectangle rectAlta = { Base, (float)posYActivacion, Altura, 30 }; 
+                
+                std::string textoBoton = "+ Anadir " + todasLasCiudades[i].nombre;
+                
+                if (GuiButton(rectAlta, textoBoton.c_str())) 
+                {
+                    sistema.altaCiudad(i); 
+                    ultimoCaminoDijkstra.clear(); 
+                    refrescarConsolaControl(); 
+                }
+                
+                posYActivacion += 40; // Bajamos 40 píxeles para dibujar el próximo botón
+            }
+        }
+
     } 
     else 
     {
@@ -260,20 +350,44 @@ Vector2 localesOriginales[5] = {
         GuiButton({ Base, 175, Altura, Ancho }, "#103# Cambiar Destino");
         GuiButton({ Base, 175 + espacio, Altura, Ancho }, "#149# Cortar Ruta Elegida");
         GuiButton({ Base, 175 + (espacio * 2), Altura, Ancho }, "#131# EJECUTAR BUSQUEDA");
-        GuiButton({ Base, 480, 200, 35 }, "Ver Matriz Actual");
-        GuiButton({ Base, 530, 200, 35 }, "Ver Historial");
+        GuiButton({ Base, 350, Altura, 35 }, "Ver Matriz Actual"); // Alineé altura y ancho
+        GuiButton({ Base, 350 + espacio, Altura, 35 }, "Ver Historial");
         GuiEnable(); 
     }
 
-    // Listado lateral derecho adaptado a la nueva escala compacta
+    // =================================================================
+    // LISTADO LATERAL DERECHO (Corregido: Abreviaturas y Botón fijo)
+    // =================================================================
     float yLista = 50;
     DrawText("CIUDADES EN RED:", 1030, 20, 18, (mostrarVentanaHistorial ? GRAY : MAROON)); 
+    
     std::vector<Ciudad> activas = sistema.getCiudadesActivas();
     for (const auto& ciudad : activas) 
     {
+        // 1. Lógica de abreviación para nombres largos
+        std::string nombreParaMostrar = ciudad.nombre;
+        if (nombreParaMostrar == "Coronel Suarez") nombreParaMostrar = "C. Suarez";
+        if (nombreParaMostrar == "Pehuajo") nombreParaMostrar = "Pehuajo"; // Si fuera necesario abreviar mas
+        
+        // Dibujamos el indicador y el texto abreviado
         DrawCircle(1000, yLista + 14, 8, (mostrarVentanaHistorial ? GRAY : GREEN));
-        DrawText(TextFormat("ID %d: %s", ciudad.id, ciudad.nombre.c_str()), 1015, yLista, 20, (mostrarVentanaHistorial ? GRAY : BLACK));
-        yLista += 30; 
+        DrawText(TextFormat("ID %d: %s", ciudad.id, nombreParaMostrar.c_str()), 1015, yLista, 20, (mostrarVentanaHistorial ? GRAY : BLACK));
+
+        // 2. Posición fija para el botón "-" (en X=1200 siempre)
+        if (ciudad.id >= 5 && !mostrarVentanaHistorial) 
+        {
+            Rectangle rectBaja = { 1200, yLista, 25, 25 }; 
+            if (GuiButton(rectBaja, "-")) 
+            {
+                sistema.bajaCiudad(ciudad.id);
+                if (origenSeleccionado == ciudad.id) origenSeleccionado = -1;
+                if (destinoSeleccionado == ciudad.id) destinoSeleccionado = -1;
+                ultimoCaminoDijkstra.clear(); 
+                refrescarConsolaControl();
+            }
+        }
+        
+        yLista += 40; 
     }
 
     // Pop-up con el listado de operaciones (Historial)
@@ -315,14 +429,14 @@ Vector2 localesOriginales[5] = {
         int posY = cuadroModal.y + 75;
         if (historialParaMostrar.empty()) 
         {
-            DrawText("No hay rutas registradas todavía.", cuadroModal.x + 40, posY + 30, 16, DARKGRAY);
+            DrawText("No hay rutas registradas todavia.", cuadroModal.x + 40, posY + 30, 16, DARKGRAY);
         } 
         else 
         {
             int fin = (scrollIndex + itemsVisibles < (int)historialParaMostrar.size()) ? scrollIndex + itemsVisibles : (int)historialParaMostrar.size();
             for (int i = scrollIndex; i < fin; i++) 
             {
-                DrawText(TextFormat("Operación #%d", i + 1), cuadroModal.x + 30, posY, 14, MAROON);
+                DrawText(TextFormat("Operacion #%d", i + 1), cuadroModal.x + 30, posY, 14, MAROON);
                 const char* detalles = TextFormat("%s (%d) -> %s (%d) | Distancia: %d km",
                                                  nombreCiudad(historialParaMostrar[i].idOrigen), historialParaMostrar[i].idOrigen,
                                                  nombreCiudad(historialParaMostrar[i].idDestino), historialParaMostrar[i].idDestino,

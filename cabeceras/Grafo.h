@@ -32,4 +32,7 @@ class GrafoLogistico
         std::vector<int> calcularDijkstra(int idOrigen, int idDestino, int &distanciaTotal);
 
         std::vector<std::vector<int>> obtenerMatrizAdyacencia() const { return matrizAdyacencia; }
+
+        // Para leer todas las ciudades y no solo las visibles.
+        std::vector<Ciudad> getTodasLasCiudades();
 };

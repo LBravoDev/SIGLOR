@@ -29,13 +29,15 @@ int main()
     while (!WindowShouldClose()) 
     {
         BeginDrawing();
-        ClearBackground(RAYWHITE); // Limpia la pantalla cada frame
+        ClearBackground(RAYWHITE); 
 
         // Pasamos el sistema y la textura cargada a la interfaz
         InterfazLogica(sistema, mapaBsAs);
 
-        // Se ajustó la posición del título para que quede centrado en la nueva resolución
-        DrawText("Panel de Control de Rutas", 480, 20, 24, GRAY);
+        // --- NUEVO TÍTULO CENTRADO ---
+        const char* titulo = "SISTEMA DE GESTIÓN LOGÍSTICA";
+        int anchoTitulo = MeasureText(titulo, 30);
+        DrawText(titulo, (GetScreenWidth() - anchoTitulo) / 2, 20, 30, DARKGRAY);
 
         EndDrawing();
     }

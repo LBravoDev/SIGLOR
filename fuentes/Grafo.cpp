@@ -293,3 +293,8 @@ vector<int> GrafoLogistico::calcularDijkstra(int idOrigen, int idDestino, int &d
 
     return camino; // Devuelve la lista de IDs que forman la ruta óptima
 }
+
+vector<Ciudad> GrafoLogistico::getTodasLasCiudades() 
+{
+    return ciudades;
+}
