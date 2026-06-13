@@ -30,4 +30,6 @@ class GrafoLogistico
 
         // Algoritmo de Dijkstra: Devuelve un vector con los IDs del camino que se recorrió, y la distanciaTotal
         std::vector<int> calcularDijkstra(int idOrigen, int idDestino, int &distanciaTotal);
+
+        std::vector<std::vector<int>> obtenerMatrizAdyacencia() const { return matrizAdyacencia; }
 };

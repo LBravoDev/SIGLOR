@@ -11,3 +11,7 @@ Al seleccionar un corte de ruta, el sistema reemplaza el peso por INF.
 ## 3. Avance parte visual
 Ya están implementados la mayor parte de los botones y funcionalidades del programa.
 ![Visual](./assets/avance.png)
+
+## 4. Avance mapa en ventana principal
+Se incorporó el mapa de Buenos Aires en la ventana principal, y coloqué los nodos respetando su ubicacion real
+![Mapa](./assets/avance.2.png)
