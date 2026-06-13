@@ -11,3 +11,4 @@ CONTENIDO:
 
     #Cuando terminemos una versión que funcione bien, la copiamos acá. Así, si queremos probar el programa rápido o
     pasárnoslo, entramos acá y listo, no hace falta ni abrir el VS Code.
+    

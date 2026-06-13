@@ -6,3 +6,6 @@ PROYECTO EDA2 - CARPETA: COMPILACIÓN
 CONTENIDO:
 - Script de compilación para Windows ('Compilar.bat')
 - Script de compilación para Linux ('compilar.sh')
+
+COMANDO PARA EJECUCION POR CONSOLA:
+- Windows: .\compilacion\Compilar.bat

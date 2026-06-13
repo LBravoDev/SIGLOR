@@ -5,22 +5,23 @@
 
 using namespace std; 
 
-// Funcioncita para frenar el programa y que no se nos cierre la consola de una
+// Funcion para frenar la pantalla y que no se cierre la consola de golpe
 void esperarTecla()
 {
     cout << "\nPresione ENTER para continuar...";
-    cin.ignore(); // Limpia basura del buffer
-    cin.get();    // Espera el enter
+    cin.ignore(); // Limpiamos la basura que pueda quedar en el buffer
+    cin.get();    // Esperamos el enter del usuario
 }
 
-int main() {
-    GrafoLogistico sistema; // Instanciamos el motor del grafo
+int main() 
+{
+    GrafoLogistico sistema; // Armamos el objeto principal del grafo
     int opcionPrincipal; 
     
-    // -------- BUCLE DEL MENU PRINCIPAL --------
+    // Menu principal que se repite hasta elegir salir
     do
     {
-        // Esto es para que limpie la consola segun si estas en Windows o Linux
+        // Limpiamos la pantalla adaptandonos a Windows o Linux
         #ifdef _WIN32
             system("cls");
         #else
@@ -40,10 +41,12 @@ int main() {
         switch(opcionPrincipal)
         {
             case 1:
-                // Muestra la matriz de adyacencia actual (la que tiene los km)
+            {
+                // Mostramos la matriz con los kilometros actuales en pantalla
                 sistema.imprimirMatriz();
                 esperarTecla();
                 break; 
+            }
             case 2:
             {
                 int opcionRuta;
@@ -69,7 +72,7 @@ int main() {
                 cout << "Opcion: ";
                 cin >> opcionRuta;
 
-                // Aca mandamos los indices a mano segun el orden de la matriz
+                // Cargamos los indices a mano segun el orden de nuestra matriz
                 switch(opcionRuta)
                 {
                     case 1: sistema.cortarRutaUnica(0 , 1); break;
@@ -92,7 +95,7 @@ int main() {
                     default: cout << "[ERROR] Opcion invalida." << endl;
                 }
                 
-                // Si cambió algo, le mostramos la matriz de nuevo para confirmar el cambio
+                // Si la opcion fue valida, mostramos la matriz modificada para chequear
                 if(opcionRuta >= 1 && opcionRuta <= 16)
                 { 
                     sistema.imprimirMatriz(); 
@@ -111,14 +114,15 @@ int main() {
                 cout << "Hasta (1-8): ";
                 cin >> destino;
 
-                // Restamos 1 porque el usuario ve 1-5 pero el array es 0-4
+                // Restamos 1 porque el usuario maneja de 1 a 8 pero el array va de 0 a 7
                 origen--; 
                 destino--;
 
                 if(origen == destino)
                 {
                     cout << "[SISTEMA] El origen y el destino no pueden ser el mismo." << endl;
-                }else if(origen >= 0 && origen <= 7 && destino >= 0 && destino <= 7)
+                }
+                else if(origen >= 0 && origen <= 7 && destino >= 0 && destino <= 7)
                 {
                     int distanciaTotal;
                     vector<int> rutaCalculada;
@@ -126,9 +130,10 @@ int main() {
                     cout << "\nDistancia calculada: " << distanciaTotal << "km." << endl;
                     sistema.imprimirCamino(rutaCalculada);
                     
-                    // CORREGIDO: Se usan las variables locales de este archivo
+                    // Guardamos la consulta exitosa en el archivo de historial
                     Persistencia::guardarRutaHistorica(origen, destino, distanciaTotal, rutaCalculada);
-                }else
+                }
+                else
                 {
                     cout << "\n>>> [ERROR] Opcion invalida." << endl;
                 }
@@ -153,27 +158,32 @@ int main() {
                 }
                 switch(opcionGestion)
                 {
-                    case 1:sistema.altaCiudad(idCiudad);break;
-                    case 2:sistema.bajaCiudad(idCiudad);break;
-                    case 3:cout << "Funcion no disponible." << endl;break;
-                    case 0:cout << "\n>>> [SISTEMA] Saliendo..." << endl;break;
-                    default:cout << "\n>>> [ERROR] Opcion invalida." << endl;break;
+                    case 1: sistema.altaCiudad(idCiudad); break;
+                    case 2: sistema.bajaCiudad(idCiudad); break;
+                    case 3: cout << "Funcion no disponible." << endl; break;
+                    case 0: cout << "\n>>> [SISTEMA] Saliendo..." << endl; break;
+                    default: cout << "\n>>> [ERROR] Opcion invalida." << endl; break;
                 }
                 esperarTecla();
                 break;
             }
-            case 5: // <--- NUEVO CASE PARA VER EL HISTORIAL
+            case 5: 
             {
+                // Levantamos el historial guardado en el archivo binario
                 Persistencia::mostrarHistorial();
                 esperarTecla();
                 break;
             }
             case 0:
+            {
                 cout << "\n>>> [SISTEMA] Finalizando..." << endl;
                 break;
+            }
             default:
+            {
                 cout << "\n>>> [ERROR] Opcion invalida." << endl;
                 break;
+            }
         }
     } while(opcionPrincipal != 0);
 

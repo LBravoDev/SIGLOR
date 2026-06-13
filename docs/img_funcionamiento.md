@@ -7,3 +7,7 @@ matriz de adyacencia con los pesos de las rutas.
 ## 2. Gestión de Contingencias (desde consola)
 Al seleccionar un corte de ruta, el sistema reemplaza el peso por INF.
 ![Ruta Cortada](./assets/consola-2.png)
+
+## 3. Avance parte visual
+Ya están implementados la mayor parte de los botones y funcionalidades del programa.
+![Visual](./assets/avance.png)
