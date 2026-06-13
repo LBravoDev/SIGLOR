@@ -16,7 +16,7 @@ ejecutables/
 # 3. Gestión de Datos (.dat)
 # Cada usuario genera sus propios archivos de persistencia binarios
 # dinámicamente, por lo que no queremos rastrear los cambios de los mismos.
-datos/
+datos/*.dat
 
 # 4. Archivos basura del sistema operativo
 Thumbs.db
