@@ -1,10 +1,14 @@
 #include "../libs/raylib.h"
 #include "../cabeceras/Interfaz.h" 
 #include "../cabeceras/Grafo.h"
+#include "../cabeceras/Persistencia.h"
 #include <cstdlib>
 
 int main() 
 {
+    // Inicializo el entorno de archivos local antes de levantar la app
+    Persistencia::inicializarArchivo();
+
     // Se agranda la ventana a una resolución estándar para que quepa el nuevo diseño
     const int anchoPantalla = 1280;
     const int altoPantalla = 720;
@@ -34,7 +38,6 @@ int main()
         // Pasamos el sistema y la textura cargada a la interfaz
         InterfazLogica(sistema, mapaBsAs);
 
-        // --- NUEVO TÍTULO CENTRADO ---
         const char* titulo = "SISTEMA DE GESTIÓN LOGÍSTICA";
         int anchoTitulo = MeasureText(titulo, 30);
         DrawText(titulo, (GetScreenWidth() - anchoTitulo) / 2, 20, 30, DARKGRAY);

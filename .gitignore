@@ -2,44 +2,22 @@
 #  CONFIGURACIÓN DE FILTROS DE GIT - PROYECTO SIGLOR
 # ==========================================================
 
-# --- (Versión anterior) ---
-# comenté estas líneas porque hacían referencia a una estructura 
-# genérica (bin/obj) o tecnologías que no usamos en este TP (MySQL/SQL).
-# *.o
-# *.exe
-# bin/
-# obj/
-# *.log
-# *.sql.gz
-
-#========================================================================
-#========================================================================
-
-# --- actualizo ---
-# Optimizo el ignore para que coincida con nuestras carpetas reales
-# y con el sistema de archivos binarios (.dat) que pidió el profe.
-
-# 1. Ignorar carpetas de salida (deberian de generarse solas al compilar)
+# 1. Ignorar carpetas de salida
 # No queremos subir archivos pesados que ralentizan el repo.
 ejecutables/
 
 # 2. Configuraciones de Editor (IDEs)
-# Ignoramos archivos locales de VS Code, Visual Studio o Code::Blocks
+# Ignoramos archivos locales de VS Code, Visual Studio o Code::Blocks.
 .vscode/
 .vs/
 *.layout
 *.depend
 
 # 3. Gestión de Datos (.dat)
-# Dejamos esto comentado para que, si subimos una base de ciudades 
-# de prueba, todos tengamos la misma. Si prefieren que cada uno 
-# use sus propios datos locales, descomentar la línea de abajo:
-# datos/*.dat
+# Cada usuario genera sus propios archivos de persistencia binarios
+# dinámicamente, por lo que no queremos rastrear los cambios de los mismos.
+datos/
 
 # 4. Archivos basura del sistema operativo
 Thumbs.db
 .DS_Store
-
-# NOTA: Si no ven las carpetas 'compilacion' o 'ejecutables' en GitHub
-# es justamente porque este archivo las está filtrando para mantener
-# el repositorio limpio de archivos temporales.

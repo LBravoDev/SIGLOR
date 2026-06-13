@@ -2,10 +2,34 @@
 #include "../cabeceras/Grafo.h" 
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 
 using namespace std;
+namespace fs = std::filesystem; // Alias para no traer toda la libreria, ya que
+                                // solo usamos esa palabra reservada especifica
 
-void Persistencia::guardarRutaHistorica(int origen, int destino, int distancia, const vector<int>& camino) 
+void Persistencia::inicializarArchivo(void)
+{
+    string rutaArchivo = "../datos/historias.dat";
+
+    try
+    {
+        if(!fs::exists(rutaArchivo))        // Si el archivo no existe, lo crea
+        {
+            ofstream archivoNuevo(rutaArchivo, ios::binary);
+            if(archivoNuevo.is_open())
+            {
+                archivoNuevo.close();
+                cout << ">>> [SISTEMA] Archivo 'historias.dat' inicializado localmente." << endl;
+            }
+        }
+    }catch (const fs::filesystem_error &e)  // Manejo de errores
+    {
+        cout << ">>>[ERROR] No se pudo inicializar el archivo local." << e.what() << endl;
+    }
+}
+
+void Persistencia::guardarRutaHistorica(int origen, int destino, int distancia, const vector<int> &camino) 
 {
     RegistroHistorial registro;
     registro.idOrigen = origen;
@@ -34,7 +58,7 @@ void Persistencia::guardarRutaHistorica(int origen, int destino, int distancia, 
     }
 }
 
-void Persistencia::mostrarHistorial() 
+void Persistencia::mostrarHistorial(void) 
 {
     ifstream archivo("../datos/historias.dat", ios::binary);
     
@@ -66,7 +90,7 @@ void Persistencia::mostrarHistorial()
 }
 
 // Devuelve los datos listos para levantar desde la interfaz de Raylib
-vector<RegistroHistorial> Persistencia::obtenerHistorial() 
+vector<RegistroHistorial> Persistencia::obtenerHistorial(void) 
 {
     vector<RegistroHistorial> lista;
     ifstream archivo("../datos/historias.dat", ios::binary);
@@ -87,7 +111,7 @@ vector<RegistroHistorial> Persistencia::obtenerHistorial()
 }
 
 // Limpia el archivo de historial por completo
-void Persistencia::borrarHistorial() 
+void Persistencia::borrarHistorial(void) 
 {
     // Usamos trunc para pisar el archivo y dejarlo totalmente vacio
     ofstream archivo("../datos/historias.dat", ios::trunc | ios::binary); 
@@ -99,6 +123,6 @@ void Persistencia::borrarHistorial()
     } 
     else 
     {
-        cerr << ">>> [ERROR] Error al intentar vaciar el archivo de historial." << endl;
+        cerr << ">>> [ERROR] No se pudo vaciar el archivo de historial." << endl;
     }
 }
