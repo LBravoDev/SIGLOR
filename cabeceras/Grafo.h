@@ -12,27 +12,26 @@ class GrafoLogistico
         std::vector<std::vector<int>> matrizBase;       // Matriz original intacta
 
     public:
-        GrafoLogistico();
+        GrafoLogistico(void);
 
-        // GESTIÓN DE NODOS
+        // GESTIÓN DE NODOS (ABM)
         void altaCiudad(int id);
         void bajaCiudad(int id);
         void modificarCiudad(int id, std::string nuevoNombre, int nuevoX, int nuevoY);
+
         // MANEJO DE CORTES
         void cortarRutaUnica(int idOrigen, int idDestino);
-        void restaurarRutas();
+        void restaurarRutas(void);
+
         // CONSOLA
-        void imprimirMatriz();
+        void imprimirMatriz(void);
         void imprimirCamino(const std::vector<int> &camino);
 
-        // El "getter" que usará la interfaz gráfica
-        std::vector<Ciudad> getCiudadesActivas();
-
-        // Algoritmo de Dijkstra: Devuelve un vector con los IDs del camino que se recorrió, y la distanciaTotal
+        // DIJKSTRA: Devuelve un vector con los IDs del camino que se recorrió, y la distanciaTotal por referencia
         std::vector<int> calcularDijkstra(int idOrigen, int idDestino, int &distanciaTotal);
-
-        std::vector<std::vector<int>> obtenerMatrizAdyacencia() const { return matrizAdyacencia; }
-
-        // Para leer todas las ciudades y no solo las visibles.
-        std::vector<Ciudad> getTodasLasCiudades();
+        
+        // Getters que usará la interfaz gráfica
+        std::vector<Ciudad> getTodasLasCiudades(void);
+        std::vector<Ciudad> getCiudadesActivas(void);
+        std::vector<std::vector<int>> obtenerMatrizAdyacencia(void) const { return matrizAdyacencia; }
 };

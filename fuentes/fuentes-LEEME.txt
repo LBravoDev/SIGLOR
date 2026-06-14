@@ -5,11 +5,8 @@ PROYECTO EDA2 - CARPETA: FUENTES
     Es donde se programa la lógica matemática, el manejo de archivos y la interacción con el usuario.
 
 ARCHIVOS CONTENIDOS:
-- principal.cpp: El que arranca todo. Es el encargado de abrir la ventana y escuchar los clicks.
+- main.cpp: El que arranca todo. Es el encargado de abrir la ventana y escuchar los clicks.
+- mainConsole.cpp: Programa main de consola (sin interfaz visual) para debuggear y testear funciones nuevas.
 - Grafo.cpp: Implementación de la lógica de grafos y el cálculo del camino mínimo.
-- Persistencia.cpp: Implementación del manejo de archivos binarios (fopen, fwrite, fread).
-- Interfaz.cpp: Implementación de la renderización gráfica del mapa y los nodos, o sea, Lo que hace que los círculos y líneas se dibujen arriba del mapa.
-
-
-    #Muchachos, cuando programen algo nuevo, fíjense de comentar un poco el código. No hace falta un testamento, pero pongan un par de
-    líneas explicando qué hace cada función así el que lo lee después no se vuelve loco tratando de entender la lógica.
+- Persistencia.cpp: Implementación del manejo de archivos binarios.
+- Interfaz.cpp: Implementación de la renderización gráfica del mapa y los nodos.

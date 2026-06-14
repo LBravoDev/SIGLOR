@@ -1,7 +1,8 @@
-#include <iostream>
-#include <cstdlib>
 #include "../cabeceras/Grafo.h"
 #include "../cabeceras/Persistencia.h"
+
+#include <iostream>
+#include <cstdlib>
 
 using namespace std; 
 
@@ -91,8 +92,8 @@ int main()
                     case 14: sistema.cortarRutaUnica(7 , 3);break;
                     case 15: sistema.cortarRutaUnica(7 , 2);break;
                     case 16: sistema.restaurarRutas(); break; 
-                    case 0: cout << "[SISTEMA] No hubo modificaciones." << endl; break;
-                    default: cout << "[ERROR] Opcion invalida." << endl;
+                    case 0: cout << "\n>>> [SISTEMA] No hubo modificaciones." << endl; break;
+                    default: cout << "\n>>> [ERROR] Opcion invalida." << endl;
                 }
                 
                 // Si la opcion fue valida, mostramos la matriz modificada para chequear
@@ -108,7 +109,6 @@ int main()
                 int origen, destino;
                 cout << "\n--- TESTEO DE RECORRIDOS ---" << endl;
                 cout << "1. La Plata\n2. Mar del Plata\n3. Bahia Blanca\n4. Olavarria\n5. Tandil\n6. Pergamino\n7. Pehuajo\n8. Coronel Suarez" << endl;
-                
                 cout << "Desde (1-8): ";
                 cin >> origen;
                 cout << "Hasta (1-8): ";
@@ -120,14 +120,14 @@ int main()
 
                 if(origen == destino)
                 {
-                    cout << "[SISTEMA] El origen y el destino no pueden ser el mismo." << endl;
+                    cout << "\n>>> [ERROR] El origen y el destino no pueden ser el mismo." << endl;
                 }
                 else if(origen >= 0 && origen <= 7 && destino >= 0 && destino <= 7)
                 {
                     int distanciaTotal;
                     vector<int> rutaCalculada;
                     rutaCalculada = sistema.calcularDijkstra(origen,destino,distanciaTotal);
-                    cout << "\nDistancia calculada: " << distanciaTotal << "km." << endl;
+                    cout << "\n>>> [SISTEMA] Distancia calculada: " << distanciaTotal << "km." << endl;
                     sistema.imprimirCamino(rutaCalculada);
                     
                     // Guardamos la consulta exitosa en el archivo de historial
@@ -160,7 +160,7 @@ int main()
                 {
                     case 1: sistema.altaCiudad(idCiudad); break;
                     case 2: sistema.bajaCiudad(idCiudad); break;
-                    case 3: cout << "Funcion no disponible." << endl; break;
+                    case 3: cout << "\n>>> [SISTEMA] Funcion no disponible." << endl; break;
                     case 0: cout << "\n>>> [SISTEMA] Saliendo..." << endl; break;
                     default: cout << "\n>>> [ERROR] Opcion invalida." << endl; break;
                 }

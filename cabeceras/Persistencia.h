@@ -19,7 +19,7 @@ class Persistencia
         static void inicializarArchivo(void);
 
         // Guarda el resultado de Dijkstra en el archivo binario
-        static void guardarRutaHistorica(int origen, int destino, int distancia, const std::vector<int>& camino);
+        static void guardarRutaHistorica(int origen, int destino, int distancia, const std::vector<int> &camino);
         
         // Lee el archivo y lo muestra por consola
         static void mostrarHistorial(void);

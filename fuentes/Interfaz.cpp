@@ -1,9 +1,9 @@
-#include "../cabeceras/Interfaz.h" 
-#include "../libs/raylib.h"
+#include "../cabeceras/Interfaz.h"
 #include "../cabeceras/Persistencia.h"
 
+#include "../libs/raylib.h"
+#include "../libs/raygui.h"
 #define RAYGUI_IMPLEMENTATION
-#include "../libs/raygui.h" 
 
 #include <iostream>
 #include <vector>
@@ -18,7 +18,7 @@ int destinoSeleccionado = -1;
 bool mostrarVentanaHistorial = false;
 std::vector<RegistroHistorial> historialParaMostrar;
 
-const char* nombreCiudad(int id) 
+const char *nombreCiudad(int id) 
 {
     switch(id) 
     {
@@ -35,7 +35,7 @@ const char* nombreCiudad(int id)
 }
 
 // Mantiene limpia la terminal mostrando los datos unificados
-void refrescarConsolaControl() 
+void refrescarConsolaControl(void) 
 {
     std::system("cls"); 
     std::cout << "=================================================" << std::endl;
@@ -75,13 +75,13 @@ void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa)
     GuiSetStyle(BUTTON, TEXT_COLOR_FOCUSED, ColorToInt(BLACK));
     GuiSetStyle(BUTTON, TEXT_COLOR_PRESSED, ColorToInt(BLACK));
 
-    // Ajuste de medidas: Altura incrementada en 10px para mayor ancho
+    // Ajuste de medidas
     const float Base = 40;
-    const float Altura = 230; // Originalmente 220, ahora 230
+    const float Altura = 230;
     const float Ancho = 40;   
     const float espacio = 50; 
     
-    // Seteamos el tamanio de la fuente para RayGui
+    // Seteamos el tamaño de la fuente para RayGui
     GuiSetStyle(DEFAULT, TEXT_SIZE, 18); 
 
     // Variables estáticas para mantener el estado entre frames
@@ -108,7 +108,8 @@ void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa)
     // =================================================================
     // COORDENADAS GEOGRÁFICAS REALES (Medidas sobre la imagen de 960x1277)
     // =================================================================
-    Vector2 localesOriginales[8] = {
+    Vector2 localesOriginales[8] =
+    {
         { 730.0f, 320.0f }, // ID 0: La Plata 
         { 760.0f, 790.0f }, // ID 1: Mar del Plata 
         { 260.0f, 920.0f }, // ID 2: Bahia Blanca 
@@ -203,7 +204,8 @@ void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa)
         Rectangle rectOrigen = { Base, 75, Altura, Ancho };
         if (GuiButton(rectOrigen, "#102# Cambiar Origen")) 
         {
-            do {
+            do
+            {
                 if (origenSeleccionado == -1) origenSeleccionado = 0;
                 else origenSeleccionado = (origenSeleccionado + 1) % 8; 
             } while (!todasLasCiudades[origenSeleccionado].activa);
@@ -216,7 +218,8 @@ void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa)
         Rectangle rectDestino = { Base, 175, Altura, Ancho };
         if (GuiButton(rectDestino, "#103# Cambiar Destino")) 
         {
-            do {
+            do
+            {
                 if (destinoSeleccionado == -1) destinoSeleccionado = 0;
                 else destinoSeleccionado = (destinoSeleccionado + 1) % 8;
             } while (!todasLasCiudades[destinoSeleccionado].activa);
@@ -246,13 +249,13 @@ void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa)
                     // SI ES ADYACENTE: Realizamos el corte
                     sistema.cortarRutaUnica(origenSeleccionado, destinoSeleccionado);
                     ultimoCaminoDijkstra.clear(); 
-                    std::cout << ">>> [AVISO] Ruta directa entre " << nombreCiudad(origenSeleccionado) 
+                    std::cout << ">>> [SISTEMA] Ruta directa entre " << nombreCiudad(origenSeleccionado)
                               << " y " << nombreCiudad(destinoSeleccionado) << " ha sido CORTADA." << std::endl;
                 }
                 else 
                 {
                     // SI NO ES ADYACENTE: Mostramos mensaje de error controlado
-                    std::cout << ">>> [ERROR] No existe ruta directa entre " << nombreCiudad(origenSeleccionado) 
+                    std::cout << ">>> [ERROR] No existe ruta directa entre " << nombreCiudad(origenSeleccionado)
                               << " y " << nombreCiudad(destinoSeleccionado) << ". Solo se pueden cortar conexiones directas." << std::endl;
                 }
             }
@@ -341,7 +344,6 @@ void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa)
                 posYActivacion += 40; // Bajamos 40 píxeles para dibujar el próximo botón
             }
         }
-
     } 
     else 
     {
@@ -362,7 +364,7 @@ void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa)
     DrawText("CIUDADES EN RED:", 1030, 20, 18, (mostrarVentanaHistorial ? GRAY : MAROON)); 
     
     std::vector<Ciudad> activas = sistema.getCiudadesActivas();
-    for (const auto& ciudad : activas) 
+    for (const auto &ciudad : activas) 
     {
         // 1. Lógica de abreviación para nombres largos
         std::string nombreParaMostrar = ciudad.nombre;

@@ -5,10 +5,4 @@ PROYECTO EDA2 - CARPETA: DATOS
     cada vez que se cierra.
 
 ARCHIVOS CONTENIDOS:
-- ciudades.dat: Archivo binario con la información de los nodos cargados.
-- rutas.dat: Archivo binario que almacena las conexiones y distancias entre ciudades.
 - historial.dat: Registro de las optimizaciones de rutas realizadas por el usuario para trazabilidad logística.
-
-
-    #Ojo: No intenten abrir estos archivos con el Bloc de Notas porque van a ver puros símbolos(binarios).
-    Si quieren ver qué tienen adentro, hay que hacerlo a través del programa o con un editor hexadecimal.

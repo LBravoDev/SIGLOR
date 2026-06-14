@@ -5,10 +5,6 @@ PROYECTO EDA2 - CARPETA: EJECUTABLES
     Acá queda la versión final lista para usar.
 
 CONTENIDO:
-- El archivo.exe: El ejecutable final.
-- NOTA: Al igual que la carpeta de compilación.
-
-
-    #Cuando terminemos una versión que funcione bien, la copiamos acá. Así, si queremos probar el programa rápido o
-    pasárnoslo, entramos acá y listo, no hace falta ni abrir el VS Code.
-    
+- El archivo.exe: El ejecutable final
+  ('programa.exe' en el caso de compilar con Windows)
+  ('programa_linux' en el caso de compilar con Linux)

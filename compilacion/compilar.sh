@@ -9,9 +9,7 @@ echo "================================================="
 
 
 # Compilación:
-# -I y -L apuntan a las carpetas subiendo un nivel (../)
-# Pero el -L principal para Raylib ahora busca EN ESTA CARPETA (.) el archivo libraylib.a de Linux
-g++ ../fuentes/main.cpp ../fuentes/Interfaz.cpp ../fuentes/Grafo.cpp \
+g++ ../fuentes/main.cpp ../fuentes/Interfaz.cpp ../fuentes/Grafo.cpp ../fuentes/Persistencia.cpp \
     -o ../ejecutables/programa_linux \
     -I ../Raylib -I ../cabeceras \
     -L ../libs \

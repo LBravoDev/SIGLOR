@@ -1,5 +1,6 @@
 #include "../cabeceras/Persistencia.h"
-#include "../cabeceras/Grafo.h" 
+#include "../cabeceras/Grafo.h"
+
 #include <fstream>
 #include <iostream>
 #include <filesystem>
@@ -20,12 +21,12 @@ void Persistencia::inicializarArchivo(void)
             if(archivoNuevo.is_open())
             {
                 archivoNuevo.close();
-                cout << ">>> [SISTEMA] Archivo 'historias.dat' inicializado localmente." << endl;
+                cout << "\n>>> [SISTEMA] Archivo 'historias.dat' inicializado localmente." << endl;
             }
         }
     }catch (const fs::filesystem_error &e)  // Manejo de errores
     {
-        cout << ">>>[ERROR] No se pudo inicializar el archivo local." << e.what() << endl;
+        cout << "\n>>> [ERROR] No se pudo inicializar el archivo local." << e.what() << endl;
     }
 }
 
@@ -50,11 +51,11 @@ void Persistencia::guardarRutaHistorica(int origen, int destino, int distancia, 
     {
         archivo.write(reinterpret_cast<char*>(&registro), sizeof(RegistroHistorial));
         archivo.close();
-        cout << ">>> [PERSISTENCIA] Ruta guardada en el historial (.dat) exitosamente." << endl;
+        cout << "\n>>> [PERSISTENCIA] Ruta guardada en el historial (.dat) exitosamente." << endl;
     } 
     else 
     {
-        cout << ">>> [ERROR] No se pudo abrir historias.dat para guardar." << endl;
+        cout << "\n>>> [ERROR] No se pudo abrir historias.dat para guardar." << endl;
     }
 }
 
@@ -64,7 +65,7 @@ void Persistencia::mostrarHistorial(void)
     
     if (!archivo.is_open()) 
     {
-        cout << ">>> [AVISO] No hay historial previo o no se pudo abrir el archivo." << endl;
+        cout << ">>> [ERROR] No hay historial previo o no se pudo abrir el archivo." << endl;
         return;
     }
 
@@ -123,6 +124,6 @@ void Persistencia::borrarHistorial(void)
     } 
     else 
     {
-        cerr << ">>> [ERROR] No se pudo vaciar el archivo de historial." << endl;
+        cout << ">>> [ERROR] No se pudo vaciar el archivo de historial." << endl;
     }
 }

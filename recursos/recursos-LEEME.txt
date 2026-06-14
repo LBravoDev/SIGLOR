@@ -7,7 +7,3 @@ PROYECTO EDA2 - CARPETA: RECURSOS
 ARCHIVOS CONTENIDOS:
 - mapa_provincia.png: Imagen de fondo sobre la cual se dibujarán dinámicamente los nodos y rutas.
 - (Opcional): Iconos, fuentes o sonidos que requiera la interfaz gráfica.
-
-
-    #Si llegan a bajar un mapa nuevo o algún ícono, métanlo acá directamente. No lo dejen en 'Descargas' o en el
-    Escritorio porque cuando (cualquiera) baje el código de GitHub no va a cargar la imagen y va a tirar error.

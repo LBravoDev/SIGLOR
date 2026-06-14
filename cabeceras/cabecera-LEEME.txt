@@ -3,19 +3,15 @@ PROYECTO EDA2 - CARPETA: CABECERAS
 ¿Que contiene esta carpeta?
 
     -> Esta carpeta contiene los archivos de cabecera (.h). Su función es definir el "QUÉ" hace el programa. 
-    Aquí se declaran las estructuras de datos, las clases y las firmas de las funciones para que el compilador 
+    Acá se declaran las estructuras de datos, las clases y las firmas de las funciones para que el compilador 
     sepa que existen antes de que se ejecute la lógica.
 
-    -> Acá metemos los archivos .h. Básicamente es el "contrato" del programa. Antes de ponernos a escribir
-    código a lo loco, acá definimos qué forma tienen los datos para que todos hablemos el mismo idioma.
-
-
 ARCHIVOS CONTENIDOS:
-- Entidades.h: Define los modelos de datos base (structs) para 'Ciudad' y 'Ruta', o sea, Es el molde de las ciudades y rutas. Sin esto, no sabemos qué datos guardar.
-- Grafo.h: El esquema del cerebro matemático. Acá declaramos la famosa matriz de adyacencia.
+- Entidades.h: Define el modelo de datos base (struct) para 'Ciudad'.
+- Grafo.h: Define la clase GrafoLogistico sobre la que trabajará el programa.
 - Persistencia.h: Declara las funciones necesarias para la lectura y escritura de archivos binarios .dat.
-- Interfaz.h: Define la lógica de dibujo y los componentes visuales de la aplicación, es el esqueleto de la parte visual (botones, mapas, etc).
+- Interfaz.h: Define la lógica de dibujo y los componentes visuales de la aplicación.
 
 
-    #Che, tengan en cuenta que si se toca algo acá, probablemente hayan que corregir cosas en los .cpp también. 
-    Tratemos de dejar las estructuras firmes desde ahora así no renegamos después cuando el proyecto crezca.
+Tener en cuenta: Si se toca algo acá, probablemente haya que corregir cosas en los .cpp también. 
+Tratemos de dejar las estructuras firmes.

@@ -3,12 +3,12 @@
 
 #include "Grafo.h"
 #include "Persistencia.h" 
-#include "../libs/raylib.h" // Agregamos esto para que el header reconozca el tipo Texture2D
+#include "../libs/raylib.h" // Para que el header reconozca el tipo Texture2D
 #include <vector>         
 
 // Variables de estado globales para la interfaz
 extern bool mostrarVentanaHistorial;
 extern std::vector<RegistroHistorial> historialParaMostrar;
 
-// Función principal de la interfaz que ahora recibe el mapa de fondo
+// Función principal de la interfaz que recibe el sistema y el mapa de fondo
 void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa);

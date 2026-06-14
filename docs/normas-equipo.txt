@@ -8,7 +8,7 @@ cuenta a la hora de codear, para mantener un orden en forma de declarar las
 variables, etc...
 
 ---------------------------------------------------------------------------
-¿CÓMO LABURAMOS? (REGLAS DEL GRUPO)
+¿CÓMO TRABAJAMOS? (REGLAS DEL GRUPO)
 ---------------------------------------------------------------------------
 
 - NOMBRES EN ESPAÑOL: Como somos de acá y el proyecto es para la UPE, 
@@ -19,8 +19,7 @@ variables, etc...
   sueltos en la carpeta raíz porque se hace un lío.
 
 - ARCHIVOS BINARIOS: Acuérdense que el profe pidió persistencia binaria. 
-  No usar .txt para guardar los datos de las rutas; usamos los .dat que
-  están en la carpeta /datos.
+  No usar .txt para guardar los datos de las rutas; usamos .dat.
 
 - MENSAJES DE COMMITS: Tratemos de que los mensajes de los 'commits' se entiendan.
   No poner solo "cambios", pongamos algo como "Agregada función de cargar ciudad"
@@ -35,6 +34,10 @@ variables, etc...
 	if(condicion)
 	{
 	}
+
+- MENSAJES DE CONSOLA: Para aumentar la legibilidad en consola, los mensajes informativos
+  del sistema tiene que tener una etiqueta encerrada en corchetes especificando qué tipo de
+  mensajes es: [ERROR] para errores, [SISTEMA] para avisos, etc.
 
 - FEATURES: A la hora de empezar la implementación de cualquier nueva feature
   o función, se creará una branch de main donde se probará la funcionalidad

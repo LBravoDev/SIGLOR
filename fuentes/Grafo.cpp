@@ -105,7 +105,7 @@ void GrafoLogistico::cortarRutaUnica(int idOrigen, int idDestino)
         matrizAdyacencia[idOrigen][idDestino] = INFINITO; 
         matrizAdyacencia[idDestino][idOrigen] = INFINITO;
         
-        cout << "\n>>> [AVISO] Ruta " << ciudades[idOrigen].nombre << " <-> " << ciudades[idDestino].nombre << " ha sido CORTADA." << endl;
+        cout << "\n>>> [SISTEMA] Ruta " << ciudades[idOrigen].nombre << " <-> " << ciudades[idDestino].nombre << " ha sido CORTADA." << endl;
     }
 }
 
@@ -176,7 +176,6 @@ void GrafoLogistico::imprimirCamino(const vector<int> &camino)
     cout << endl;
 }
 
-// Filtro de seguridad: mandamos solo lo que esté vivo para no dibujar ciudades dadas de baja
 vector<Ciudad> GrafoLogistico::getCiudadesActivas()
 {
     vector<Ciudad> activas;
@@ -280,7 +279,7 @@ vector<int> GrafoLogistico::calcularDijkstra(int idOrigen, int idDestino, int &d
 
     if (distanciaTotal == INFINITO)     // Caso de destino inalcanzable
     {
-        cout << "\n>>> [ALERTA] No existe ninguna ruta valida para llegar a " << ciudades[idDestino].nombre << "." << endl;
+        cout << "\n>>> [ERROR] No existe ninguna ruta valida para llegar a " << ciudades[idDestino].nombre << "." << endl;
         return {}; // Devolvemos el vector vacío
     }
 

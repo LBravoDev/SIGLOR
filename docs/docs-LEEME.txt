@@ -5,4 +5,7 @@ PROYECTO EDA2 - CARPETA: EJECUTABLES
 	la misma que no va a ser directamente utilizada en el código, sino como
 	fuente de información y base para la realización del proyecto.
 CONTENIDO:
-- Documentación y recursos
+- Nodos y Conexiones: Documentación de la definición de nodos y rutas del programa.
+- Algoritmo de Dijkstra: Documentación del funcionamiento del algoritmo dentro del código.
+- img_funcionamiento: Documentación de avances varios del proyecto.
+- normas-equipo: Normas y condiciones para el trabajo en conjunto del equipo.

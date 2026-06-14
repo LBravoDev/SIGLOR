@@ -1,7 +1,9 @@
-#include "../libs/raylib.h"
 #include "../cabeceras/Interfaz.h" 
 #include "../cabeceras/Grafo.h"
 #include "../cabeceras/Persistencia.h"
+
+#include "../libs/raylib.h"
+
 #include <cstdlib>
 
 int main() 
