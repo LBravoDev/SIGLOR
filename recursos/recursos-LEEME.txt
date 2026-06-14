@@ -5,5 +5,5 @@ PROYECTO EDA2 - CARPETA: RECURSOS
     al asegurar que todos los desarrolladores usen la misma ruta de acceso.
 
 ARCHIVOS CONTENIDOS:
-- mapa_provincia.png: Imagen de fondo sobre la cual se dibujarán dinámicamente los nodos y rutas.
-- (Opcional): Iconos, fuentes o sonidos que requiera la interfaz gráfica.
+- Logos SIGLOR: Logo del programa en .png y .ico.
+- recursos.rc: Script de configuración de Windows.

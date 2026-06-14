@@ -19,6 +19,15 @@ int main()
     SetTraceLogLevel(LOG_WARNING);
 
     InitWindow(anchoPantalla, altoPantalla, "Sistema Logistico - EDA1");
+
+    Image icono = LoadImage("../recursos/siglorLogo64.png");
+    if (icono.data != NULL)
+    {
+        ImageResize(&icono, 64, 64); // Forzamos a un tamaño estándar de ícono de ventana
+        SetWindowIcon(icono);
+        UnloadImage(icono);
+    }
+
     SetTargetFPS(60); 
 
     #ifdef _WIN32

@@ -21,3 +21,7 @@ datos/*.dat
 # 4. Archivos basura del sistema operativo
 Thumbs.db
 .DS_Store
+
+# 5. Archivos objeto (se genera uno para cargar el logo)
+recursos/*.o
+recursos/*.obj

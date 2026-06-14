@@ -2,8 +2,8 @@
 #include "../cabeceras/Persistencia.h"
 
 #include "../libs/raylib.h"
-#include "../libs/raygui.h"
 #define RAYGUI_IMPLEMENTATION
+#include "../libs/raygui.h"
 
 #include <iostream>
 #include <vector>
