@@ -39,7 +39,7 @@ int main()
     GrafoLogistico sistema; 
 
     // Cargamos el mapa de Buenos Aires antes de arrancar el bucle principal
-    Texture2D mapaBsAs = LoadTexture("../docs/assets/BsAs.png");
+    Texture2D mapaBsAs = LoadTexture("../recursos/BsAs.png");
 
     while (!WindowShouldClose()) 
     {

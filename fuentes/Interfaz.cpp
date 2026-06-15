@@ -280,6 +280,8 @@ void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa)
                 
                 if (distanciaTotal != 999999 && !ultimoCaminoDijkstra.empty()) 
                 {
+                    std::cout << "\n>>> [SISTEMA] Distancia calculada: " << distanciaTotal << "km." << std::endl;
+                    sistema.imprimirCamino(ultimoCaminoDijkstra);
                     Persistencia::guardarRutaHistorica(origenSeleccionado, destinoSeleccionado, distanciaTotal, ultimoCaminoDijkstra);
                 }
                 else
