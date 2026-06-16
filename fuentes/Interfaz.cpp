@@ -37,13 +37,9 @@ const char *nombreCiudad(int id)
 // Mantiene limpia la terminal mostrando los datos unificados
 void refrescarConsolaControl(void) 
 {
-    #if defined (_WIN32) || defined (_WIN64)
-        system("cls");
-    #elif defined (_linux_) || defined (_APPLE_) || defined (_unix)
-        system("clear");
-    #else
-        std::cout << std::string(50,'\n');
-    #endif
+    // Limpia la pantalla y sube el cursor.
+    std::cout << "\033[2J\033[1;1H";
+    
     std::cout << "=================================================" << std::endl;
     std::cout << "   ESTADO SELECCIONADO ACTUAL (PANEL DE CONTROL) " << std::endl;
     std::cout << "=================================================" << std::endl;
