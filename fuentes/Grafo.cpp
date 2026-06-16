@@ -79,6 +79,7 @@ void GrafoLogistico::bajaCiudad(int id)
 }
 
 // MODIFICACIÓN
+/*
 void GrafoLogistico::modificarCiudad(int id, string nuevoNombre, int nuevoX, int nuevoY) 
 {
     if(id >= 0 && id < (int)ciudades.size()) 
@@ -92,6 +93,7 @@ void GrafoLogistico::modificarCiudad(int id, string nuevoNombre, int nuevoX, int
         cout << "\n>>> [ERROR] ID invalido." << endl;
     }
 }
+*/
 
 // --- MANEJO DE CORTES (Contingencias) ---
 void GrafoLogistico::cortarRutaUnica(int idOrigen, int idDestino) 
@@ -253,7 +255,7 @@ vector<int> GrafoLogistico::calcularDijkstra(int idOrigen, int idDestino, int &d
                 cout << setw(10) << "INF" << " | ";
             }else
             {
-                char predChar = (predecesores[j] != -1) ? ('0' + (predecesores[j] + 1)) : '-';
+                char predChar = (predecesores[j] != -1) ? ('0' + (predecesores[j])) : '-';
                 string celda = to_string(distancias[j]) + "(" + predChar + ")";
                 cout << setw(10) << celda << " | "; // Centra el contenido en los 10 caracteres de ancho
             }

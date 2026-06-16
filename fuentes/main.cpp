@@ -20,6 +20,7 @@ int main()
 
     InitWindow(anchoPantalla, altoPantalla, "Sistema Logistico - EDA1");
 
+    // Carga el png del icono
     Image icono = LoadImage("../recursos/siglorLogo64.png");
     if (icono.data != NULL)
     {
@@ -30,10 +31,13 @@ int main()
 
     SetTargetFPS(60); 
 
-    #ifdef _WIN32
-        system("cls"); // Limpia la consola en Windows al arrancar
+    // Limpia la pantalla con el comando correspondiente al SO en el que se ejecuta
+    #if defined (_WIN32) || defined (_WIN64)
+        system("cls");
+    #elif defined (_linux_) || defined (_APPLE_) || defined (_unix)
+        system("clear");
     #else
-        system("clear"); // Por si se ejecuta en Linux/macOS
+        std::cout << std::string(50,'\n');  // Opción default
     #endif
 
     GrafoLogistico sistema; 

@@ -22,11 +22,12 @@ int main()
     // Menu principal que se repite hasta elegir salir
     do
     {
-        // Limpiamos la pantalla adaptandonos a Windows o Linux
-        #ifdef _WIN32
-            system("cls");
-        #else
+        #if defined (_WIN32) || defined (_WIN64)
+        system("cls");
+        #elif defined (_linux_) || defined (_APPLE_) || defined (_unix)
             system("clear");
+        #else
+            std::cout << std::string(50,'\n');
         #endif
 
         cout << "\n====== SISTEMA DE GESTION LOGISTICA ======" << endl;
@@ -108,15 +109,11 @@ int main()
             {
                 int origen, destino;
                 cout << "\n--- TESTEO DE RECORRIDOS ---" << endl;
-                cout << "1. La Plata\n2. Mar del Plata\n3. Bahia Blanca\n4. Olavarria\n5. Tandil\n6. Pergamino\n7. Pehuajo\n8. Coronel Suarez" << endl;
-                cout << "Desde (1-8): ";
+                cout << "0. La Plata\n1. Mar del Plata\n2. Bahia Blanca\n3. Olavarria\n4. Tandil\n5. Pergamino\n6. Pehuajo\n7. Coronel Suarez" << endl;
+                cout << "Desde (0-7): ";
                 cin >> origen;
-                cout << "Hasta (1-8): ";
+                cout << "Hasta (0-7): ";
                 cin >> destino;
-
-                // Restamos 1 porque el usuario maneja de 1 a 8 pero el array va de 0 a 7
-                origen--; 
-                destino--;
 
                 if(origen == destino)
                 {
@@ -152,9 +149,8 @@ int main()
                 int idCiudad;
                 if(opcionGestion == 1 || opcionGestion == 2 || opcionGestion == 3)
                 {
-                    cout << "Ingrese el id del nodo (1-8): " << endl;
+                    cout << "Ingrese el id del nodo (0-7): " << endl;
                     cin >> idCiudad;
-                    idCiudad -= 1;
                 }
                 switch(opcionGestion)
                 {

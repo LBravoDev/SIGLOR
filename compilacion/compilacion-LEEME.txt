@@ -7,7 +7,7 @@ CONTENIDO:
 - Script de compilación para Windows ('Compilar.bat')
 - Script de compilación para Linux ('compilar.sh')
 
-COMANDO PARA EJECUCION POR CONSOLA:
+COMANDO PARA EJECUCION POR CONSOLA (desde carpeta root del programa):
 - Windows: .\compilacion\Compilar.bat
 - Linux: ./compilacion/compilar.sh
-  (Si da error "Permission denied", dar permiso de ejecución: chmod +x compilar.sh)
+  (Si da error "Permission denied", dar permiso de ejecución: chmod +x compilacion/compilar.sh)

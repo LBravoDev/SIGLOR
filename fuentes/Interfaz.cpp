@@ -37,26 +37,19 @@ const char *nombreCiudad(int id)
 // Mantiene limpia la terminal mostrando los datos unificados
 void refrescarConsolaControl(void) 
 {
-    std::system("cls"); 
+    #if defined (_WIN32) || defined (_WIN64)
+        system("cls");
+    #elif defined (_linux_) || defined (_APPLE_) || defined (_unix)
+        system("clear");
+    #else
+        std::cout << std::string(50,'\n');
+    #endif
     std::cout << "=================================================" << std::endl;
     std::cout << "   ESTADO SELECCIONADO ACTUAL (PANEL DE CONTROL) " << std::endl;
     std::cout << "=================================================" << std::endl;
     std::cout << "-> Origen:  ID: " << origenSeleccionado << " (" << nombreCiudad(origenSeleccionado) << ")" << std::endl;
     std::cout << "-> Destino: ID: " << destinoSeleccionado << " (" << nombreCiudad(destinoSeleccionado) << ")" << std::endl;
     std::cout << "=================================================" << std::endl;
-}
-
-// Función auxiliar para saber qué rutas existen realmente en nuestro mapa físico
-bool esRutaFisica(int ciudadA, int ciudadB) 
-{
-    // Bloqueamos La Plata (0) <-> Bahia Blanca (2)
-    if ((ciudadA == 0 && ciudadB == 2) || (ciudadA == 2 && ciudadB == 0)) return false;
-    
-    // Bloqueamos Mar del Plata (1) <-> Olavarria (3)
-    if ((ciudadA == 1 && ciudadB == 3) || (ciudadA == 3 && ciudadB == 1)) return false;
-
-    // Cualquier otra combinación sí es una ruta válida en nuestro mapa
-    return true;
 }
 
 void InterfazLogica(GrafoLogistico &sistema, Texture2D mapa) 

@@ -17,7 +17,10 @@ class GrafoLogistico
         // GESTIÓN DE NODOS (ABM)
         void altaCiudad(int id);
         void bajaCiudad(int id);
+        /*
         void modificarCiudad(int id, std::string nuevoNombre, int nuevoX, int nuevoY);
+        Esta función no fue implementada al programa final por decisión del equipo.
+        */
 
         // MANEJO DE CORTES
         void cortarRutaUnica(int idOrigen, int idDestino);
